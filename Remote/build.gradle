@@ -1,0 +1,28 @@
+apply plugin: 'kotlin'
+
+dependencies {
+    def dependencies = rootProject.ext.remoteDependencies
+    def testDependencies = rootProject.ext.remoteTestDependencies
+
+    compile project(":Data")
+
+    implementation dependencies.gson
+    implementation dependencies.rxKotlin
+    implementation dependencies.kotlin
+    implementation dependencies.javaxAnnotation
+    implementation dependencies.javaxInject
+    implementation dependencies.androidAnnotation
+    implementation dependencies.okHttp
+    implementation dependencies.okHttpLogger
+    implementation dependencies.retrofit
+    implementation dependencies.retrofitConvertor
+    implementation dependencies.retrofitAdapter
+
+    testImplementation testDependencies.junit
+    testImplementation testDependencies.kotlinJunit
+    testImplementation testDependencies.assertj
+    testImplementation testDependencies.mockito
+}
+
+sourceCompatibility = "6"
+targetCompatibility = "6"

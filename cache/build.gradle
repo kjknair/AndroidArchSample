@@ -1,0 +1,53 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
+    buildToolsVersion(globalConfiguration["androidBuildToolsVersion"])
+
+
+
+    defaultConfig {
+        minSdkVersion globalConfiguration["androidMinSdkVersion"]
+        targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    def dependencies = rootProject.ext.cacheDependencies
+    def testDependencies = rootProject.ext.cacheTestDependencies
+
+    implementation project(":Data")
+    kapt dependencies.daggerCompiler
+    implementation dependencies.dagger
+    implementation dependencies.gson
+    implementation dependencies.rxKotlin
+    implementation dependencies.kotlin
+    compileOnly dependencies.javaxAnnotation
+    implementation dependencies.javaxInject
+    implementation dependencies.androidAnnotation
+    implementation dependencies.roomRuntime
+    kapt dependencies.roomCompiler
+    implementation dependencies.roomRxJava
+
+    testImplementation testDependencies.junit
+    testImplementation testDependencies.robolectric
+    testImplementation testDependencies.kotlinJunit
+    testImplementation testDependencies.assertj
+    testImplementation testDependencies.mockito
+    testImplementation testDependencies.supportRunner
+    testImplementation testDependencies.supportRules
+    testImplementation testDependencies.roomTesting
+    testImplementation testDependencies.archTesting
+}
